@@ -11,7 +11,9 @@
     <script>
         canvas = document.getElementById("clock");
         var ctx = canvas.getContext('2d');
+        var currentTime = new Date();
 
+        console.log(currentTime.getHours());
         draw();
 
         //Стрелки
@@ -57,7 +59,7 @@
             var currentTime = new Date();
 
             var hours = currentTime.getHours();
-            var hoursAngle = (-Math.PI/2) + (2*Math.PI/60) * hours;
+            var hoursAngle = (-Math.PI/2) + (2*Math.PI/12) * hours;
             length = 150;
             ctx.beginPath();
             ctx.lineWidth = 5;
