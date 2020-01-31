@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="clock" width="600" height="600"></canvas>
+    <script>
+        canvas = document.getElementById("clock");
+        var ctx = canvas.getContext('2d');
+
+        draw();
+
+        //Стрелки
+        function draw(){
+
+            centerX = canvas.width/2;
+            centerY = canvas.height/2;
+
+            ctx.beginPath();
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0,0,canvas.width,canvas.height);
+
+            //Контур
+            ctx.beginPath();
+            ctx.arc(centerX,centerY,255,0,2*Math.PI);
+            ctx.strokeStyle = "#000000";
+            ctx.stroke();
+
+            //Циферблат
+            step = (2*Math.PI)/60
+            fi = -Math.PI/2;
+            radius = 240;
+            textRadius = 200;
+            for(i = 1; i <= 60;i++){
+                ctx.beginPath();
+                miniRadius = (i + 4) % 5 == 0 ? 6 : 2;
+                ctx.arc(centerX + radius * Math.cos(fi),centerY + radius * Math.sin(fi),miniRadius,0,2*Math.PI);
+                ctx.strokeStyle = "#000000";
+                ctx.stroke();
+                fi += step;
+
+                if(i%5 == 0){
+                    ctx.font = "36px serif";
+                    ctx.textAlign = "center";
+                    ctx.strokeText("" + i/5, centerX + textRadius * Math.cos(fi),centerY + 10 + textRadius * Math.sin(fi));
+                }
+
+            }
+
+
+            ctx.strokeStyle = "#000000";
+
+            var currentTime = new Date();
+
+            var hours = currentTime.getHours();
+            var hoursAngle = (-Math.PI/2) + (2*Math.PI/60) * hours;
+            length = 150;
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            ctx.moveTo(centerX,centerY);
+            ctx.lineTo(centerX + length * Math.cos(hoursAngle),centerY + length * Math.sin(hoursAngle));
+            ctx.stroke();
+
+            var minutes = currentTime.getMinutes();
+            var minutesAngle = (-Math.PI/2) + (2*Math.PI/60) * minutes;
+            length = 190;
+            ctx.beginPath();
+            ctx.lineWidth = 3;
+            ctx.moveTo(centerX,centerY);
+            ctx.lineTo(centerX + length * Math.cos(minutesAngle),centerY + length * Math.sin(minutesAngle));
+            ctx.stroke();
+
+
+            var seconds = currentTime.getSeconds();
+            var secondsAngle = (-Math.PI/2) + (2*Math.PI/60) * seconds;
+            length = 190;
+            ctx.beginPath();
+            ctx.lineWidth = 1;
+            ctx.moveTo(centerX,centerY);
+            ctx.lineTo(centerX + length * Math.cos(secondsAngle),centerY + length * Math.sin(secondsAngle));
+            ctx.strokeStyle = "#FF0000";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.lineWidth = 1;
+            ctx.arc(centerX,centerY,6,0,2*Math.PI);
+            ctx.fillStyle = "#000000";
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(centerX,centerY,4,0,2*Math.PI);
+            ctx.fillStyle = "#ffffff";
+            ctx.fill();
+
+            setTimeout(draw,1000)
+        }
+    </script>
+</body>
+</html>
