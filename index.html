@@ -59,7 +59,10 @@
             var currentTime = new Date();
 
             var hours = currentTime.getHours();
-            var hoursAngle = (-Math.PI/2) + (2*Math.PI/12) * hours;
+            var minutes = currentTime.getMinutes();
+            var seconds = currentTime.getSeconds();
+
+            var hoursAngle = (-Math.PI/2) + (2*Math.PI/12) * hours + (2*Math.PI/720) * minutes;
             length = 150;
             ctx.beginPath();
             ctx.lineWidth = 5;
@@ -67,7 +70,7 @@
             ctx.lineTo(centerX + length * Math.cos(hoursAngle),centerY + length * Math.sin(hoursAngle));
             ctx.stroke();
 
-            var minutes = currentTime.getMinutes();
+            
             var minutesAngle = (-Math.PI/2) + (2*Math.PI/60) * minutes;
             length = 190;
             ctx.beginPath();
